@@ -16,7 +16,7 @@ public class ApptStorageNullImpl extends ApptStorage {
 	@Override
 	public void SaveAppt(Appt appt) {
 		// TODO Auto-generated method stub
-
+		System.out.println("Update");
 	}
 
 	@Override
