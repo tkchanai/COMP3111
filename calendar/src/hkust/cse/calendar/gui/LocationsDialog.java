@@ -15,8 +15,13 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import sun.awt.FocusingTextField;
+
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.color.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 
 public class LocationsDialog extends JFrame{
@@ -25,22 +30,23 @@ public class LocationsDialog extends JFrame{
 	
 	private ApptStorageControllerImpl _controller;
 	
-	private DefaultListModel<Location> listModel;
-	private JList<Location> list;
+	private DefaultListModel<Object> listModel;
+	private JList<Object> list;
 	private JTextField locNameText;
 	private JButton _add;
 	private JButton _delete;
+	
 	public LocationsDialog(ApptStorageControllerImpl controller){
-		
 		_controller =controller;
 		Location[] z=controller.getLocationList();
 		this.setLayout(new BorderLayout());
 		this.setLocationByPlatform(true);
 		this.setSize(300,200);
 		
-		listModel = new DefaultListModel<Location>();
+		listModel = new DefaultListModel<Object>();
+		initialize();
 		
-		list = new JList<Location>(listModel);
+		list = new JList<Object>(listModel);
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		this.add(new JScrollPane(list),BorderLayout.NORTH);
 		
@@ -49,9 +55,12 @@ public class LocationsDialog extends JFrame{
 		
 		_add = new JButton("add");
 		this.add(_add,BorderLayout.CENTER);
+		_add.addActionListener(new add_Action());
 		
 		_delete = new JButton("delete");
 		this.add(_delete,BorderLayout.EAST);
+		_delete.addActionListener(new delete_Action());
+		
 		list.setSelectedIndex(0);
 		list.addListSelectionListener(new ListSelectionListener(){
 			@Override
@@ -62,20 +71,45 @@ public class LocationsDialog extends JFrame{
 				}
 			}
 		);
-		
-		_add.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
-				if(locNameText.getText() !=null){
-					Location newloc = new Location(locNameText.getText());
-					listModel.addElement(newloc);
+	}
+	
+	private void initialize() {
+	//	if(_controller.getLocationList().length!=0)	
+	//		for(int i = 0;i<_controller.getLocationList().length;i++)
+		//		listModel.addElement(_controller.getLocationList()[i].getName());	
+	}
+
+	public class add_Action implements ActionListener{
+		public void actionPerformed (ActionEvent e){
+			String temps = locNameText.getText().trim();
+			if (!temps.equals("")){
+				listModel.addElement(temps.toUpperCase());
+				locNameText.setText("");
+				locNameText.grabFocus();
+				int length = listModel.size();
+				Location[] temp = new Location[length];
+				for(int i = 0;i<length;i++){
+					temp[i] = new Location(null);
+					temp[i].setName(listModel.elementAt(i).toString());
 				}
-				
+			_controller.setLocationList(temp);
+			for(int i = 0;i<length;i++){
+				listModel.addElement(_controller.getLocationList()[i].getName());
 			}
-		});
-		_delete.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
-				listModel.remove(list.getSelectedIndex());
+			} else {
+				locNameText.grabFocus();
 			}
-		});
+		}
+	}
+	
+	public class delete_Action implements ActionListener{
+		public void actionPerformed (ActionEvent e){
+			if (listModel.getSize() != 0){
+				if(list.getSelectedIndex() != -1){
+					listModel.removeElementAt(list.getSelectedIndex());
+					locNameText.grabFocus();
+				}
+			}
+		}
 	}
 }
