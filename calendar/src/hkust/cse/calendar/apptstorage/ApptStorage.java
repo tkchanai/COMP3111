@@ -1,6 +1,7 @@
 package hkust.cse.calendar.apptstorage;//
 
 import hkust.cse.calendar.unit.Appt;
+import hkust.cse.calendar.unit.Location;
 import hkust.cse.calendar.unit.TimeSpan;
 import hkust.cse.calendar.unit.User;
 
@@ -16,6 +17,10 @@ public abstract class ApptStorage {
 	public ApptStorage() {	//default constructor
 	}
 
+	public abstract Location[] getLocationList();
+	
+	public abstract void setLocationList(Location[] locations);
+	
 	public abstract void SaveAppt(Appt appt);	//abstract method to save an appointment record
 
 	public abstract Appt[] RetrieveAppts(TimeSpan d);	//abstract method to retrieve an appointment record by a given timespan
