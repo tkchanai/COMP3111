@@ -73,7 +73,7 @@ public class LocationsDialog extends JFrame{
 	//		for(int i = 0;i<_controller.getLocationList().length;i++)
 		//		listModel.addElement(_controller.getLocationList()[i].getName());	
 	}
-
+	
 	public class add_Action implements ActionListener{
 		public void actionPerformed (ActionEvent e){
 			String temps = locNameText.getText().trim();
@@ -81,13 +81,7 @@ public class LocationsDialog extends JFrame{
 				listModel.addElement(temps.toUpperCase());
 				locNameText.setText("");
 				locNameText.grabFocus();
-				int length = listModel.size();
-				Location[] temp = new Location[length];
-				for(int i = 0;i<length;i++){
-					temp[i] = new Location(null);
-					temp[i].setName(listModel.elementAt(i).toString());
-				}
-			_controller.setLocationList(temp);
+				UpdateLocationList();
 			} else {
 				locNameText.grabFocus();
 			}
@@ -100,8 +94,22 @@ public class LocationsDialog extends JFrame{
 				if(list.getSelectedIndex() != -1){
 					listModel.removeElementAt(list.getSelectedIndex());
 					locNameText.grabFocus();
+					UpdateLocationList();
 				}
 			}
 		}
 	}
-}
+	
+	public void UpdateLocationList() {
+		int length = listModel.size();
+		Location[] temp = new Location[length];
+		for(int i = 0;i<length;i++){
+			temp[i] = new Location(null);
+			temp[i].setName(listModel.elementAt(i).toString());
+		}
+		_controller.setLocationList(temp);
+		//check getlocationlist validity
+	//	for(int i = 0;i<length;i++){
+	//		listModel.addElement(_controller.getLocationList()[i].getName());;
+	//	}
+	}
