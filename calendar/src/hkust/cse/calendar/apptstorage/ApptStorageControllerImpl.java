@@ -64,4 +64,14 @@ public class ApptStorageControllerImpl {
 	public void LoadApptFromXml(){
 		mApptStorage.LoadApptFromXml();
 	}
+
+	// method used to get Location List
+	public Location[] getLocationList() {
+		return mApptStorage.getLocationList();
+	}
+	
+	public void setLocationList(Location[] locations) {
+		mApptStorage.setLocationList(locations);
+	}
 }
+
