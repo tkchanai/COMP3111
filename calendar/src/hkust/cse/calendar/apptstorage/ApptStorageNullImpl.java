@@ -13,6 +13,17 @@ public class ApptStorageNullImpl extends ApptStorage {
 		defaultUser = user;
 	}
 	
+	Location[] _locations;
+	
+	@Override
+	public Location[] getLocationList() {
+		return _locations;
+	}
+	@Override
+	public void setLocationList(Location[] locations) {
+		_locations = locations;
+	}
+	
 	@Override
 	public void SaveAppt(Appt appt) {
 		// TODO Auto-generated method stub
