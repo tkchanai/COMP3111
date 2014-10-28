@@ -63,5 +63,19 @@ public class LocationsDialog extends JFrame{
 			}
 		);
 		
+		_add.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				if(locNameText.getText() !=null){
+					Location newloc = new Location(locNameText.getText());
+					listModel.addElement(newloc);
+				}
+				
+			}
+		});
+		_delete.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				listModel.remove(list.getSelectedIndex());
+			}
+		});
 	}
 }
