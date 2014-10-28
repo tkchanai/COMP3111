@@ -34,7 +34,6 @@ public class LocationsDialog extends JFrame{
 	
 	public LocationsDialog(ApptStorageControllerImpl controller){
 		_controller =controller;
-		Location[] z=controller.getLocationList();
 		this.setLayout(new BorderLayout());
 		this.setLocationByPlatform(true);
 		this.setSize(300,200);
@@ -89,9 +88,6 @@ public class LocationsDialog extends JFrame{
 					temp[i].setName(listModel.elementAt(i).toString());
 				}
 			_controller.setLocationList(temp);
-			for(int i = 0;i<length;i++){
-				listModel.addElement(_controller.getLocationList()[i].getName());
-			}
 			} else {
 				locNameText.grabFocus();
 			}
