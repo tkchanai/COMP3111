@@ -150,6 +150,15 @@ public class AppScheduler extends JDialog implements ActionListener,
 		titleField = new JTextField(15);
 		titleAndTextPanel.add(titleL);
 		titleAndTextPanel.add(titleField);
+		
+		Location[] locations = cal.controller.getLocationList();
+		if(locations==null){
+			locations = new Location[0];
+		}
+		JLabel locationL = new JLabel("LOCATION");
+		locField = new JComboBox(locations);
+		titleAndTextPanel.add(locationL);
+		titleAndTextPanel.add(locField);
 
 		detailPanel = new JPanel();
 		detailPanel.setLayout(new BorderLayout());
